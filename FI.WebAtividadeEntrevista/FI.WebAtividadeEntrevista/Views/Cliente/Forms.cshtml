@@ -1,0 +1,188 @@
+﻿<script type="text/javascript" src="https://www.geradorcpf.com/assets/js/jquery-1.2.6.pack.js"></script>
+<script type="text/javascript" src="https://www.geradorcpf.com/assets/js/jquery.maskedinput-1.1.4.pack.js"></script>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    function mascara(i) {
+
+        var v = i.value;
+
+        if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
+            i.value = v.substring(0, v.length - 1);
+            return;
+        }
+
+        i.setAttribute("maxlength", "14");
+        if (v.length == 3 || v.length == 7) i.value += ".";
+        if (v.length == 11) i.value += "-";
+
+    }
+
+</script>
+
+@{
+    FI.AtividadeEntrevista.BLL.BoBeneficiario boBeneficiario = new FI.AtividadeEntrevista.BLL.BoBeneficiario();
+
+
+}
+
+
+<form id="formCadastro" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Nome">Nome:</label>
+                <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João" maxlength="50">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Sobrenome">Sobrenome:</label>
+                <input required="required" type="text" class="form-control" id="Sobrenome" name="Sobrenome" placeholder="Ex.: da Silva" maxlength="255">
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="CPF">CPF:</label>
+                <input required="required" type="text" class="form-control" id="CPF" name="CPF" placeholder="Ex.: CPF" maxlength="20" oninput="mascara(this)">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Nacionalidade">Nacionalidade:</label>
+                <input required="required" type="text" class="form-control" id="Nacionalidade" name="Nacionalidade" placeholder="Ex.: brasileira" maxlength="50">
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="CEP">CEP:</label>
+                <input required="required" type="text" class="form-control" id="CEP" name="CEP" placeholder="Ex.: 01011-100" maxlength="9">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Estado">Estado:</label>
+                <select required="required" id="Estado" class="form-control" name="Estado">
+                    <option value="">Selecione</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="PE">Pernambuco</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Cidade">Cidade:</label>
+                <input required="required" type="text" class="form-control" id="Cidade" name="Cidade" maxlength="50" placeholder="Ex.: São Paulo">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="Logradouro">Logradouro:</label>
+                <input required="required" type="text" class="form-control" id="Logradouro" name="Logradouro" placeholder="Ex.: Rua Boa Vista 253" maxlength="500">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Email">E-mail:</label>
+                <input required="required" type="text" class="form-control" id="Email" name="Email" placeholder="Ex.: email@email.com" maxlength="2079">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Telefone">Telefone:</label>
+                <input required="required" type="tel" class="form-control" id="Telefone" name="Telefone" placeholder="Ex.: (11) 2020-3030" maxlength="15">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="pull-right">
+                @if (ViewBag.Id_Cliente != false)
+                {
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#loginModal">Fazer Login</button>
+                }
+                <button type="submit" class="btn btn-sm btn-success">Salvar</button>
+                @Html.ActionLink("Voltar", "Index", "Cliente", new { }, new { @class = "btn btn-sm btn-danger" })
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @if (ViewBag.Id_Cliente != false)
+    {
+
+        <div class="modal fade" tabindex="-1" id="loginModal" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Cadastro de Beneficiários</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Nome">Nome:</label>
+                                    <input required="required" type="text" class="form-control" id="Ben_NOME" name="Ben_NOME" placeholder="Ex.: José" maxlength="500">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="CPF">CPF:</label>
+                                    <input required="required" type="text" class="form-control" id="Ben_CPF" name="Ben_CPF" placeholder="Ex.: xxx.xxx.xxx-xx" maxlength="15" oninput="mascara(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <table class="table table-responsive">
+                            <tr>
+                                <td>Nome</td>
+                                <td>CPF</td>
+                            </tr>
+                            @{
+
+                                var Listando_Beneficiaros = boBeneficiario.Listar(@ViewBag.Id);
+                                foreach (var itens in Listando_Beneficiaros)
+                                {
+                                    <tr>
+                                        <td>@itens.NOME</td>
+                                        <td>@itens.CPF</td>
+                                    </tr>
+                                }
+                            }
+
+
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-success">Salvar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</form>
